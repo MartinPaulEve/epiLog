@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+	{% if user.is_authenticated %}
+	{% load avatars %}
+	    <div class="container-fluid">
+		    <div class="row-fluid">
+			    <div class="span2">
+				    <!--Sidebar content-->
+			    	<div id="avatar">
+						<a href="/accounts/profile/edit/avatar/">
+							<img class="border" src="{% avatar 96 %}" />
+						</a>
+					</div>
+					<hr/>
+			        <ul class="nav nav-pills nav-stacked">
+				    	<li class="active">
+				    		<a href="#">Home</a>
+				    	</li>
+				    	<li><a href="#">Objects</a></li>
+				    	<li><a href="#">Comparisons</a></li>
+				    </ul>
+				</div>
+				<div class="span10">
+				    <!--Body content-->
+			    </div>
+		    </div>
+	    </div>
+	{% else %}
+      <div class="hero-unit">
+        <h1>epiLog</h1>
+        <p>epiLog is a digital humanities project that allows abstraction, annotation and comparison of user-defined "objects". These "objects", be they books, films or performance art pieces are broken down into manageable units and annotated by users. epiLog then allows cross-object comparisons.</p>
+        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4">
+          <h2>Free, Open Source</h2>
+           <p>epiLog is free, Open Source software, released under the GPL v3. You are free to download, use and change it so long as you adhere to these terms.</p>
+        </div>
+        <div class="span4">
+          <h2>Share and Browse</h2>
+           <p>Your annotations can be private or public, but the biggest value to the community occurs when your objects are made public so that others can cross-compare.</p>
+       </div>
+        <div class="span4">
+          <h2>Get started today</h2>
+          <p>If you just want to get annotating, begin a class project or your own research then it's easy to get started.</p>
+          <p><a class="btn" href="#">Get started &raquo;</a></p>
+        </div>
+      </div>
+      {% endif %}
+{% endblock %}

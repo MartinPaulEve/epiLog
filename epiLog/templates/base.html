@@ -1,0 +1,231 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>epiLog Object Annotation System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link href="{{MEDIA_URL}}bootstrap/css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+</style>
+<link href="{{MEDIA_URL}}bootstrap/css/bootstrap-responsive.css"
+	rel="stylesheet">
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<!-- Le fav and touch icons -->
+<link rel="shortcut icon" href="{{MEDIA_URL}}assets/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="{{MEDIA_URL}}assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="{{MEDIA_URL}}assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+	href="{{MEDIA_URL}}assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> </a> <a
+					class="brand" href="/">epiLog</a>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li class="active"><a href="/">Home</a></li>
+						<li><a href="#about">About</a></li>
+						<li><a href="#contact">Browse Objects</a></li>
+						<li><a href="#contact">Get Started</a></li>
+						{% if user.is_authenticated %}
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"> Account <b class="caret"></b> </a>
+							<ul class="dropdown-menu">
+								<li class="nav-header">Your epiLog</li>
+								<a href="#"><i class="icon-book"></i> Objects</a>
+								<li class="nav-header">You</li>
+								<a href="#"><i class="icon-user"></i> Profile</a>
+								<a href="#"><i class="icon-cog"></i> Settings</a>
+								<li class="divider"></li>
+								<a href="#"><i class="icon-flag"></i> Help</a>
+								<li class="divider"></li>
+								<a href="/logout/"><i class="icon-eject"></i> Logout</a>
+							</ul></li> 
+						{% else %}
+						<li><a data-toggle="modal" href="#loginModal">Login</a></li> 
+						{%	endif %}
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+				<form class="navbar-search pull-right">
+					<input type="text" class="search-query" placeholder="Search">
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		{% block content %}{% endblock %}
+
+		<hr>
+
+		<footer>
+			<p>&copy; Martin Paul Eve 2012</p>
+		</footer>
+
+	</div>
+	<!-- /container -->
+
+	<!-- modal dialogs -->
+	<div class="modal fade" id="loginModal">
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">×</a>
+			<h3>Login to epiLog</h3>
+		</div>
+		<div class="modal-body">
+			<form action="" method="post">
+				{% csrf_token %}
+				<p>
+					epiLog uses OpenID for its authentication.
+				</p>
+				<p>
+					Username: <br/><input type="text" name="openid_username" id="openid_username" />
+				</p>
+				<p>Select your OpenID provider:</p>
+				    <div class="btn-group" data-toggle="buttons-radio">
+				    <a class="btn openurlbutton" data-toggle="button" id="aol"><img src="{{MEDIA_URL}}openid/aol.ico" alt="AOL" /></a>
+				    <a class="btn openurlbutton" data-toggle="button" id="blogger"><img src="{{MEDIA_URL}}openid/blogger.ico" alt="Blogger" /></a>
+				    <a class="btn openurlbutton" data-toggle="button" id="claimid"><img src="{{MEDIA_URL}}openid/claimid.ico" alt="Claim ID" /></a>
+				    <a class="btn openurlbutton" data-toggle="button" id="flickr"><img src="{{MEDIA_URL}}openid/flickr.ico" alt="Flickr" /></a>
+				    <a class="btn openurlbutton" data-toggle="button" id="google"><img src="{{MEDIA_URL}}openid/google.ico" alt="Google" /></a>
+				    <a class="btn openurlbutton" data-toggle="button" id="livejournal"><img src="{{MEDIA_URL}}openid/lj.ico" alt="LiveJournal" /></a>
+				    <a class="btn openurlbutton" data-toggle="button" id="myopenid"><img src="{{MEDIA_URL}}openid/myopenid.ico" alt="myOpenID" /></a>
+				    <a class="btn openurlbutton" data-toggle="button" id="technorati"><img src="{{MEDIA_URL}}openid/technorati.ico" alt="Technorati" /></a>
+				    <a class="btn openurlbutton" data-toggle="button" id="verisign"><img src="{{MEDIA_URL}}openid/verisign.ico" alt="Verisign" /></a>
+				    <a class="btn openurlbutton" data-toggle="button" id="vidoop"><img src="{{MEDIA_URL}}openid/vidoop2.ico" alt="Vidoop" /></a>
+				    <a class="btn openurlbutton" data-toggle="button" id="yahoo"><img src="{{MEDIA_URL}}openid/yahoo.ico" alt="Yahoo" /></a>
+				    </div>
+				    	    
+				    
+				    <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
+					    Advanced...
+					  </a>
+					
+					<div id="collapseOne" class="collapse">
+					  <div class="accordion-inner">
+					    <p>Enter an OpenID URL:</p>
+					    {{ form.openid_identifier }}
+					  </div>
+					</div>
+				    
+				</p>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<a data-dismiss="modal" class="btn">Close</a> <a href="#" class="btn btn-primary" id="doLogin"><i class="icon-user icon-white"></i> Login</a>
+		</div>
+	</div>
+
+
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		
+	<script type="text/javascript">
+	
+	var provider = '';
+	
+	$(document).ready(function() {
+
+		$(".openurlbutton").click(function(){
+			provider = $(this).attr('id');
+			setProvider(provider);
+		});
+
+		$("#openid_identifier").keyup(function(){
+			setProvider(provider);
+		});
+		
+		$("#doLogin").click(function(){
+			$('form').submit(); 
+		});
+		
+	});
+	
+  // a brief piece of script that will populate the openID identifier when the user clicks on a provider
+  // it will also deal with the page aesthetics of clicking a provider
+  function setProvider(provider)
+  {
+    providerBox = $('#id_openid_identifier');
+    userName = $('#openid_username').val();
+
+    var selected = 0;
+
+    switch (provider)
+    {
+    case "aol":
+		providerBox.val("http://openid.aol.com/" + userName);
+		break;
+    case "blogger":
+		providerBox.val("http://" + userName + ".blogspot.com");
+		break;
+	case "claimid":
+		providerBox.val("http://claimid.com/" + userName);
+		break;
+	case "flickr":
+		providerBox.val("http://flickr.com/" + userName);
+		break;
+	case "google":
+		providerBox.val("https://www.google.com/accounts/o8/id");
+		break;
+	case "livejournal":
+		providerBox.val("http://" + userName  + ".livejournal.com");
+		break;
+    case "myopenid":
+		providerBox.val("http://" + userName  + ".myopenid.com");
+		break;
+	case "technorati":
+		providerBox.val("http://technorati.com/people/technorati/" + userName);
+		break;
+	case "verisign":
+		providerBox.val("http://" + userName + ".pip.verisignlabs.com");
+		break;
+	case "vidoop":
+		providerBox.val("http://" + userName + ".myvidoop.com");
+		break;
+	case "yahoo":
+		providerBox.val("https://me.yahoo.com/");
+		break;
+    }
+
+  }
+  
+</script>
+	
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-transition.js"></script>
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-alert.js"></script>
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-modal.js"></script>
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-dropdown.js"></script>
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-scrollspy.js"></script>
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-tab.js"></script>
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-tooltip.js"></script>
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-popover.js"></script>
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-button.js"></script>
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-collapse.js"></script>
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-carousel.js"></script>
+	<script src="{{MEDIA_URL}}bootstrap/js/bootstrap-typeahead.js"></script>
+	
+	{% block extrajs %}{% endblock %}
+
+</body>
+</html>
